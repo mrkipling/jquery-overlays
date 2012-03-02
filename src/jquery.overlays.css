@@ -1,0 +1,77 @@
+/*--- generic overlay ---*/
+
+.generic_overlay {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    padding: 20px;
+    width: 600px;
+
+    box-shadow: 0 1px 17px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 17px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 17px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+/*--- generic dialog ---*/
+
+.generic_dialog {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    padding: 20px;
+    text-align: center;
+    width: 400px;
+
+    box-shadow: 0 1px 17px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 17px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 17px rgba(0, 0, 0, 0.3);
+}
+
+.generic_dialog h1 {
+    color: #555;
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0 0 10px;
+}
+
+.generic_dialog ul.choices {
+    margin: 0;
+    padding: 0;
+}
+
+.generic_dialog ul.choices li {
+    background: #ddd;
+    background: -moz-linear-gradient(#fff, #ddd);
+    background: -webkit-linear-gradient(#fff, #ddd);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#ddd));
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    color: #555;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin: 0 5px;
+    min-width: 50px;
+    outline: none;
+    padding: 0 .7em;
+    position: relative;
+    text-shadow: 0 1px 0 #fff;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.06), inset 1px 1px rgba(255,255,255,.05);
+    -ms-background-clip: padding-box;
+    -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,0.06), inset 1px 1px rgba(255,255,255,.05);
+}
+
+.generic_dialog ul.choices li:hover,
+.generic_dialog ul.choices li:focus {
+    border-color: #777;
+    color: #444;
+    text-decoration: none;
+}
