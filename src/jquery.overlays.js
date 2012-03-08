@@ -171,7 +171,7 @@ Can be bound to document if you just want to invoke a dialog. You will need to o
 You can also specify settings for showOverlay in the dialog settings, as they will be passed when invoking it.
 
 USAGE:
-$(element).showOverlay(settings)
+$(element).dialog(settings)
 
 settings is optional, and can contain the following:
 
@@ -180,12 +180,12 @@ text:
     Default: 'Are you sure?'
     Description: Heading text displayed in the dialog.
 
-yestext:
+yesText:
     Type: string
     Default: 'Yes'
-    Description: Text displayed on the 'yes' button.
+    Description: Text displayed on the 'yes' button. If set to null, no 'yes' button will be inserted and noText will be 'OK' by default.
 
-notext:
+noText:
     Type: string
     Default: 'No'
     Description: Text displayed on the 'no' button.
@@ -205,8 +205,8 @@ no:
         var settings = {
             'ele': $(this),
             'text': 'Are you sure?',
-            'yestext': 'Yes',
-            'notext': 'No',
+            'yesText': 'Yes',
+            'noText': 'No',
             'yes': function() {
                 if (settings.ele.is('button')) {
                     settings.ele.closest('form').submit();
@@ -219,32 +219,39 @@ no:
             },
             'no': function() {
                 $(this).closest('.generic_dialog').closeOverlay();
-            }
+            },
+            'position': 'center'
         };
 
         if (usersettings !== undefined) {
             jQuery.extend(settings, usersettings);
         }
 
-        var dialog = $('<div class="generic_dialog"><h1>' + settings.text + '</h1><ul class="choices"><li class="yes">' + settings.yestext + '</li><li class="no">' + settings.notext + '</li></ul></div>');
+        if (usersettings.yesText === null && usersettings.noText === undefined) {
+            settings.noText = 'OK';
+        }
 
-        dialog.find('.yes').bind('click', settings.yes);
-        dialog.find('.no').bind('click', settings.no);
+        var yesButton = settings.yesText === null ? '' : '<li class="yes">' + settings.yesText + '</li>';
+
+        var dialog = $('<div class="generic_dialog"><h1>' + settings.text + '</h1><ul class="choices">' + yesButton + '<li class="no">' + settings.noText + '</li></ul></div>');
 
         dialog.showOverlay(settings);
+
+        dialog.find('.yes').click(settings.yes);
+        dialog.find('.no').click(settings.no);
     }
 });
 
 /*
 Allows dialogs to be assigned to buttons and anchors simply by adding data-dialog="true".
-You can also specify data-yestext and data-notext (although the defaults will be used if not specified).
+You can also specify data-yesText and data-noText (although the defaults will be used if not specified).
 */
 
 $('a[data-dialog=true], button[data-dialog=true]').on('click', function(e) {
     var usersettings = { fadeIn: true };
     if ($(this).data('text'))    { usersettings.text = $(this).data('text'); }
-    if ($(this).data('yestext')) { usersettings.yestext = $(this).data('yestext'); }
-    if ($(this).data('no_ext'))  { usersettings.notext = $(this).data('notext'); }
+    if ($(this).data('yesText')) { usersettings.yesText = $(this).data('yesText'); }
+    if ($(this).data('noText'))  { usersettings.noText = $(this).data('noText'); }
     $(this).dialog(usersettings);
     e.preventDefault();
 });
