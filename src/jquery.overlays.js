@@ -225,6 +225,8 @@ no:
 
         if (usersettings !== undefined) {
             jQuery.extend(settings, usersettings);
+        } else {
+            usersettings = {};
         }
 
         if (usersettings.yesText === null && usersettings.noText === undefined) {
