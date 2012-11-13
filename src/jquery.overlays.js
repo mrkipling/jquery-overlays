@@ -1,8 +1,3 @@
-/*
-Overlay helpers
-
-showOverlay
-closeOverlay
 dialog
 */
 
@@ -44,6 +39,11 @@ escClose
     Default: true
     Description: If set to true, pressing escape will close the overlay.
 
+destroy
+    Type: bool
+    Default: true
+    Description: If set to true, the overlay is removed on close. If set to false, it is hidden (display: none).
+
 callback
     Type: function
     Default: empty function
@@ -59,6 +59,7 @@ callback
             'close': '.close',
             'onClose': function(){},
             'escClose': true,
+            'destroy': true,
             'callback': function(){}
         };
 
@@ -111,7 +112,7 @@ callback
                 'margin-left': (overlay.outerWidth() / 2) * -1,
                 'z-index': 100,
                 'position': position,
-                'top': top
+                'top': Math.max(5, top)
             });
 
             // if not fading in, execute callback
@@ -130,7 +131,7 @@ callback
         if (settings.close) {
             overlay.find(settings.close).bind('click', function(e) {
                 settings.onClose();
-                overlay.closeOverlay();
+                overlay.closeOverlay(settings.destroy);
                 e.preventDefault();
             });
         }
@@ -139,7 +140,7 @@ callback
         if (settings.escClose) {
             $(document).bind('keydown.showOverlay', function(e) {
                 if (e.which === 27) {
-                    overlay.closeOverlay();
+                    overlay.closeOverlay(settings.destroy);
                 }
             });
         }
@@ -156,8 +157,15 @@ USAGE:
 $(element).closeOverlay()
 */
 
-    closeOverlay: function() {
-        $(this).remove();
+    closeOverlay: function(destroy) {
+        if (typeof destroy === 'undefined') { destroy = true; }
+
+        if (destroy) {
+            $(this).remove();
+        } else {
+            $(this).hide();
+        }
+
         $('#overlayBg').remove();
         $(document).unbind('keydown.showOverlay');
     },
