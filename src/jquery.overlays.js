@@ -1,3 +1,8 @@
+/*
+Overlay helpers
+
+showOverlay
+closeOverlay
 dialog
 */
 
